@@ -1,3 +1,6 @@
 .DS_Store
 ._.DS_Store
+*.gem
+.bundle
+.config
 rhapsody-0.0.0.gem

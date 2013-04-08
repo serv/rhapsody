@@ -6,7 +6,8 @@ Gem::Specification.new do |s|
   s.description = "Rhapsody REST API gem provides a Ruby object-oriented interface for fun and profit*. This gem is still not ready."
   s.authors     = ["Jason Kim"]
   s.email       = 'jkim@rhapsody.com'
-  s.files       = ["lib/rhapsody.rb"]
+  s.files       = Dir.glob("lib/**/*")
+  s.require_paths = ["lib"]
   s.homepage    =
     'https://github.com/serv/rhapsody'
 end
