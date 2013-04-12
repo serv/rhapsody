@@ -104,6 +104,16 @@ module Rhapsody
     end
   end
 
+  class Image
+    attr_accessor :width, :height, :url
+
+    def initialize(arguments)
+      arguments.each do |key, value|
+        instance_variable_set("@#{key}", value)
+      end
+    end
+  end
+
   class Authentication
   end
 
@@ -123,5 +133,15 @@ module Rhapsody
   end
 
   class Search
+  end
+
+  class Type
+    attr_accessor :id, :name
+
+    def initialize(arguments)
+      arguments.each do |key, value|
+        instance_variable_set("@#{key}", value)
+      end
+    end
   end
 end
