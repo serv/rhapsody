@@ -27,6 +27,14 @@ module Rhapsody
       arguments.each do |key, value|
         if key == "artist"
           instance_variable_set("@#{key}", Artist.new(value))
+        elsif key == "tracks"
+          instance_variable_set("@#{key}", value.map.each {|element| Track.new(element)})
+        elsif key == "genre"
+          instance_variable_set("@#{key}", Genre.new(value))
+        elsif key == "type"
+          instance_variable_set("@#{key}", Type.new(value))
+        elsif key == "images"
+          instance_variable_set("@#{key}", value.map.each {|element| Image.new(element)})
         else
           instance_variable_set("@#{key}", value)
         end
