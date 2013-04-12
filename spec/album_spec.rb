@@ -2,15 +2,39 @@ require 'spec_helper'
 
 describe Rhapsody::Album, '#initialize' do
   it "retuns an album object" do
-    album = Rhapsody::Album.new(nil, nil, nil, nil, nil, nil, nil)
+    album = Rhapsody::Album.new({})
     album.class.name.should == "Rhapsody::Album"
   end
 
+  it "responds to all the album attributes" do
+    album = Rhapsody::Album.new({})
+    album_attributes = [:id, :name, :artist, :released, :tags, :label, :discs, :genre, :type, :copyright, :images, :tracks]
+
+    album_attributes.each do |attribute|
+      album.respond_to?(attribute).should == true
+    end
+  end
+
   it "can initialize values for attributes of album" do
-    album = Rhapsody::Album.new("Alb.96825681", "I Am Not A Human Being II" , {"id"=>"Art.9005", "name"=>"Lil Wayne"}, 1364281200000, {"id"=>0, "name"=>"Main Releases"} , ["Explicit"] , [{"width"=>170, "height"=>170, "url"=>"http://static.rhap.com/img/170x170/9/2/4/3/3923429_170x170.jpg"}])
+    album = Rhapsody::Album.new({
+      :id => "Alb.96825681",
+      :name => "I Am Not A Human Being II",
+      :artist => Rhapsody::Artist.new({:id => "Art.9005", :name => "Lil Wayne"}),
+      :released => 1364281200000,
+      :tags => ["Explicit"],
+      :label => nil,
+      :discs => 1,
+      :genre => nil,
+      :type => {"id"=>0, "name"=>"Main Releases"},
+      :copyright => nil,
+      :images => [{"width"=>170, "height"=>170, "url"=>"http://static.rhap.com/img/170x170/9/2/4/3/3923429_170x170.jpg"}],
+      :tracks => nil
+    })
+
     album.id.should == "Alb.96825681"
     album.name.should == "I Am Not A Human Being II"
-    album.artist.should == {"id"=>"Art.9005", "name"=>"Lil Wayne"}
+    album.artist.id.should == "Art.9005"
+    album.artist.name.should == "Lil Wayne"
     album.released.should == 1364281200000
     album.type.should == {"id"=>0, "name"=>"Main Releases"}
     album.tags.should == ["Explicit"]
@@ -37,6 +61,13 @@ describe Rhapsody::Album, '#top' do
     total_albums_ids_only = total_albums.map {|x| x.id }
     offset_albums_ids_only = offset_albums.map {|x| x.id }
 
-    (total_albums_ids_only & offset_albums_ids_only).count.should == offset
+    (total_albums_ids_only & offset_albums_ids_only).count.should == offset - 1
+  end
+end
+
+describe Rhapsody::Album, '#album_details' do
+  it "returns a album object" do
+    album = Rhapsody::Album.album_details("alb.42020471")
+    album.class.name.should == "Rhapsody::Album"
   end
 end
