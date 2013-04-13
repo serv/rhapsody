@@ -71,13 +71,11 @@ module Rhapsody
       albums
     end
 
-    # not working
     def self.album_details(id)
       url = "http://api.rhapsody.com/v0/albums/#{id}?apikey=#{API_KEY}"
       begin
         json = JSON.parse(open(url).read)
-        json.each do |element|
-        end
+        album = Album.new(json)
       rescue Exception => e
         puts "Getting #{__method__} #{self.name} is not currently working."
       end
