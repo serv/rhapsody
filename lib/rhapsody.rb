@@ -41,10 +41,17 @@ module Rhapsody
       end
     end
 
-    # not working
     def self.new_releases
       url = "http://api.rhapsody.com/v0/albums/new?apikey=#{API_KEY}"
-      json = JSON.parse(open(url).read)
+      
+      begin
+        json = JSON.parse(open(url).read)
+        json.map do |album|
+          Album.new(album)
+        end
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
+      end
     end
 
     def self.top(limit, offset)
@@ -65,10 +72,10 @@ module Rhapsody
           })
           albums << album
         end
+        albums
       rescue Exception => e
         puts "Getting #{__method__} #{self.name} is not currently working."
       end
-      albums
     end
 
     def self.album_details(id)

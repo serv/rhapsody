@@ -79,3 +79,14 @@ describe Rhapsody::Album, '#album_details' do
     end
   end
 end
+
+describe Rhapsody::Album, '#new_releases' do
+  it "returns an array of albums" do    
+    albums = Rhapsody::Album.new_releases
+    albums.class.name.should == "Array"
+    albums.each do |album|
+      album.class.name.should == "Rhapsody::Album"
+    end
+  end
+end
+
