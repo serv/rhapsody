@@ -90,3 +90,12 @@ describe Rhapsody::Album, '#new_releases' do
   end
 end
 
+describe Rhapsody::Album, '#album_tracks' do
+  it "returns an array of albums" do    
+    tracks = Rhapsody::Album.album_tracks("alb.42020471")
+    tracks.class.name.should == "Array"
+    tracks.each do |track|
+      track.class.name.should == "Rhapsody::Track"
+    end
+  end
+end

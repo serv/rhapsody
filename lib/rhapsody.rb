@@ -87,6 +87,18 @@ module Rhapsody
         puts "Getting #{__method__} #{self.name} is not currently working."
       end
     end
+    
+    def self.album_tracks(id)
+      url = "http://api.rhapsody.com/v0/albums/#{id}/tracks?apikey=#{API_KEY}"
+      begin
+        json = JSON.parse(open(url).read)
+        json.map do |track|
+          Track.new(track)
+        end
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
+      end
+    end
   end
 
   class Track
