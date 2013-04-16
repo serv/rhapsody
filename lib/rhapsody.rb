@@ -43,7 +43,7 @@ module Rhapsody
 
     def self.new_releases
       url = "http://api.rhapsody.com/v0/albums/new?apikey=#{API_KEY}"
-      
+
       begin
         json = JSON.parse(open(url).read)
         json.map do |album|
@@ -87,13 +87,49 @@ module Rhapsody
         puts "Getting #{__method__} #{self.name} is not currently working."
       end
     end
-    
+
     def self.album_tracks(id)
       url = "http://api.rhapsody.com/v0/albums/#{id}/tracks?apikey=#{API_KEY}"
       begin
         json = JSON.parse(open(url).read)
         json.map do |track|
           Track.new(track)
+        end
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
+      end
+    end
+
+    def self.album_images(id)
+      url = "http://api.rhapsody.com/v0/albums/#{id}/images?apikey=#{API_KEY}"
+      begin
+        json = JSON.parse(open(url).read)
+        json.map do |image|
+          Image.new(image)
+        end
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
+      end
+    end
+
+    def self.similar_albums(id)
+      url = "http://api.rhapsody.com/v0/albums/#{id}/similar?apikey=#{API_KEY}"
+      begin
+        json = JSON.parse(open(url).read)
+        json.map do |album|
+          Album.new(album)
+        end
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
+      end
+    end
+
+    def self.album_reviews(id)
+      url = "http://api.rhapsody.com/v0/albums/#{id}/reviews?apikey=#{API_KEY}"
+      begin
+        json = JSON.parse(open(url).read)
+        json.map do |review|
+          Review.new(review)
         end
       rescue
         puts "Getting #{__method__} #{self.name} is not currently working."
@@ -155,6 +191,16 @@ module Rhapsody
   end
 
   class Popularity
+  end
+
+  class Review
+    attr_accessor :id, :author, :body
+
+    def initialize(arguments)
+      arguments.each do |key, value|
+        instance_variable_set("@#{key}", value)
+      end
+    end
   end
 
   class Search

@@ -68,7 +68,7 @@ end
 describe Rhapsody::Album, '#album_details' do
   it "returns a album object and have correct attributes" do
     album_attributes = [:id, :name, :artist, :released, :tags, :label, :discs, :genre, :type, :copyright, :images, :tracks]
-    
+
     album = Rhapsody::Album.album_details("alb.42020471")
     album.class.name.should == "Rhapsody::Album"
     album.tracks.each do |track|
@@ -81,7 +81,7 @@ describe Rhapsody::Album, '#album_details' do
 end
 
 describe Rhapsody::Album, '#new_releases' do
-  it "returns an array of albums" do    
+  it "returns an array of albums" do
     albums = Rhapsody::Album.new_releases
     albums.class.name.should == "Array"
     albums.each do |album|
@@ -91,11 +91,53 @@ describe Rhapsody::Album, '#new_releases' do
 end
 
 describe Rhapsody::Album, '#album_tracks' do
-  it "returns an array of albums" do    
+  it "returns an array of albums" do
     tracks = Rhapsody::Album.album_tracks("alb.42020471")
     tracks.class.name.should == "Array"
     tracks.each do |track|
       track.class.name.should == "Rhapsody::Track"
+    end
+  end
+end
+
+describe Rhapsody::Album, '#album_images' do
+  it 'returns an array of images' do
+    image_attributes = [:width, :height, :url]
+    images = Rhapsody::Album.album_images("alb.42020471")
+    images.class.name.should == 'Array'
+    images.each do |image|
+      image.class.name.should == 'Rhapsody::Image'
+      image_attributes.each do |attribute|
+        image.respond_to?(attribute).should == true
+      end
+    end
+  end
+end
+
+describe Rhapsody::Album, 'similar_albums' do
+  it 'returns an array of albums' do
+    album_attributes = [:id, :name, :artist, :released, :tags, :label, :discs, :genre, :type, :copyright, :images, :tracks]
+    albums = Rhapsody::Album.similar_albums('alb.42020471')
+    albums.class.name.should == 'Array'
+    albums.each do |album|
+      album.class.name.should == 'Rhapsody::Album'
+      album_attributes.each do |attribute|
+        album.respond_to?(attribute).should == true
+      end
+    end
+  end
+end
+
+describe Rhapsody::Album, 'album_reviews' do
+  it 'returns an array of reviews' do
+    review_attributes = [:id, :author, :body]
+    reviews = Rhapsody::Album.album_reviews('alb.42020471')
+    reviews.class.name.should == 'Array'
+    reviews.each do |review|
+      review.class.name.should == 'Rhapsody::Review'
+      review_attributes.each do |attribute|
+        review.respond_to?(attribute).should == true
+      end
     end
   end
 end
