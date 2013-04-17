@@ -61,7 +61,7 @@ describe Rhapsody::Album, '#top' do
     total_albums_ids_only = total_albums.map {|x| x.id }
     offset_albums_ids_only = offset_albums.map {|x| x.id }
 
-    (total_albums_ids_only & offset_albums_ids_only).count.should == offset
+    (total_albums_ids_only & offset_albums_ids_only).count.should == total - offset
   end
 end
 

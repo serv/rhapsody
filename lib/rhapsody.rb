@@ -6,20 +6,6 @@ require 'extensions/strings'
 module Rhapsody
   API_KEY = "FF3m3Ux0fES32FFvc08QMY1xRH6XGOgn"
 
-  class Artist
-    attr_accessor :id, :name, :genre
-
-    def initialize(arguments)
-      arguments.each do |key, value|
-        if key == "genre"
-          instance_variable_set("@#{key}", Genre.new(value))
-        else
-          instance_variable_set("@#{key}", value)
-        end
-      end
-    end
-  end
-
   class Album
     attr_accessor :id, :name, :artist, :released, :tags, :label, :discs, :genre, :type, :copyright, :images, :tracks
 
@@ -130,6 +116,70 @@ module Rhapsody
         json = JSON.parse(open(url).read)
         json.map do |review|
           Review.new(review)
+        end
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
+      end
+    end
+  end
+
+  class Artist
+    attr_accessor :id, :name, :genre, :albums
+
+    def initialize(arguments)
+      arguments.each do |key, value|
+        if key == "genre"
+          instance_variable_set("@#{key}", Genre.new(value))
+        elsif key == "albums"
+          instance_variable_set("@#{key}", value.map.each {|element| Album.new(element)})
+        else
+          instance_variable_set("@#{key}", value)
+        end
+      end
+    end
+
+    def self.top_artists(limit, offset)
+      url = "http://api.rhapsody.com/v0/artists/top?apikey=#{API_KEY}"
+      url.limit_offset!(limit, offset) if limit || offset
+      begin
+        json = JSON.parse(open(url).read)
+        json.map do |artist|
+          Artist.new(artist)
+        end
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
+      end
+    end
+
+    def self.artist_detail_simple(id)
+      url = "http://api.rhapsody.com/v0/artists/#{id}?apikey=#{API_KEY}"
+
+      begin
+        json = JSON.parse(open(url).read)
+        Artist.new(json)
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
+      end
+    end
+
+    def self.artist_detail_full(id)
+      url = "http://api.rhapsody.com/v0/artists/#{id}/full?apikey=#{API_KEY}"
+
+      begin
+        json = JSON.parse(open(url).read)
+        Artist.new(json)
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
+      end
+    end
+
+    def self.artist_discography(id)
+      url = "http://api.rhapsody.com/v0/artists/#{id}/albums?apikey=#{API_KEY}"
+
+      begin
+        json = JSON.parse(open(url).read)
+        json.map do |album|
+          Album.new(album)
         end
       rescue
         puts "Getting #{__method__} #{self.name} is not currently working."
