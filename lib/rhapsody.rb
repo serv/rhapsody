@@ -6,6 +6,43 @@ require 'extensions/strings'
 module Rhapsody
   API_KEY = "FF3m3Ux0fES32FFvc08QMY1xRH6XGOgn"
 
+  class API
+    def self.version
+      "v1"
+    end
+
+    def self.base
+      "http://api.rhapsody.com/"
+    end
+
+    def self.base_v
+      self.base + self.version + '/'
+    end
+
+    def self.classes
+      {
+        'Album' => 'albums',
+        'Artist' => 'artists',
+        'Author' => 'authors',
+        'Bio' => 'bios',
+        'Content' => 'contents',
+        'Feature' => 'features',
+        'Track' => 'tracks',
+        'Genre' => 'genres',
+        'Image' => 'images',
+        'Playlist' => 'playlists',
+        'Review' => 'reviews',
+        'Station' => 'stations',
+        'Type' => 'types'
+      }
+    end
+
+    def self.full_url(class_name)
+      class_name = class_name[/::[a-zA-z]*/][2..class_name.length-1]
+      self.base_v + self.classes[class_name] + '/'
+    end
+  end
+
   class Album
     attr_accessor :id, :name, :artist, :released, :tags,
       :label, :discs, :genre, :type, :copyright, :images, :tracks
@@ -29,7 +66,7 @@ module Rhapsody
     end
 
     def self.new_releases
-      url = "http://api.rhapsody.com/v1/albums/new?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "new?apikey=#{API_KEY}"
 
       begin
         json = JSON.parse(open(url).read)
@@ -43,7 +80,7 @@ module Rhapsody
 
     def self.top(limit, offset)
       albums = []
-      url = "http://api.rhapsody.com/v1/albums/top?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "top?apikey=#{API_KEY}"
       url.limit_offset!(limit, offset) if limit || offset
       begin
         json = JSON.parse(open(url).read)
@@ -66,7 +103,7 @@ module Rhapsody
     end
 
     def self.album_details(id)
-      url = "http://api.rhapsody.com/v1/albums/#{id}?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "#{id}?apikey=#{API_KEY}"
       begin
         json = JSON.parse(open(url).read)
         album = Album.new(json)
@@ -76,7 +113,7 @@ module Rhapsody
     end
 
     def self.album_tracks(id)
-      url = "http://api.rhapsody.com/v1/albums/#{id}/tracks?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "#{id}/tracks?apikey=#{API_KEY}"
       begin
         json = JSON.parse(open(url).read)
         json.map do |track|
@@ -88,7 +125,7 @@ module Rhapsody
     end
 
     def self.album_images(id)
-      url = "http://api.rhapsody.com/v1/albums/#{id}/images?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "#{id}/images?apikey=#{API_KEY}"
       begin
         json = JSON.parse(open(url).read)
         json.map do |image|
@@ -100,7 +137,7 @@ module Rhapsody
     end
 
     def self.similar_albums(id)
-      url = "http://api.rhapsody.com/v1/albums/#{id}/similar?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "#{id}/similar?apikey=#{API_KEY}"
       begin
         json = JSON.parse(open(url).read)
         json.map do |album|
@@ -112,7 +149,7 @@ module Rhapsody
     end
 
     def self.album_reviews(id)
-      url = "http://api.rhapsody.com/v1/albums/#{id}/reviews?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "#{id}/reviews?apikey=#{API_KEY}"
       begin
         json = JSON.parse(open(url).read)
         json.map do |review|
@@ -140,7 +177,7 @@ module Rhapsody
     end
 
     def self.top_artists(limit, offset)
-      url = "http://api.rhapsody.com/v1/artists/top?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "top?apikey=#{API_KEY}"
       url.limit_offset!(limit, offset) if limit || offset
       begin
         json = JSON.parse(open(url).read)
@@ -153,7 +190,7 @@ module Rhapsody
     end
 
     def self.artist_detail_simple(id)
-      url = "http://api.rhapsody.com/v1/artists/#{id}?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "#{id}?apikey=#{API_KEY}"
 
       begin
         json = JSON.parse(open(url).read)
@@ -164,7 +201,7 @@ module Rhapsody
     end
 
     def self.artist_detail_full(id)
-      url = "http://api.rhapsody.com/v1/artists/#{id}/full?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "#{id}/full?apikey=#{API_KEY}"
 
       begin
         json = JSON.parse(open(url).read)
@@ -175,7 +212,7 @@ module Rhapsody
     end
 
     def self.bio_blurb(id)
-      url = "http://api.rhapsody.com/v1/artists/#{id}/bio?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "#{id}/bio?apikey=#{API_KEY}"
 
       begin
         json = JSON.parse(open(url).read)
@@ -186,7 +223,7 @@ module Rhapsody
     end
 
     def self.artist_discography(id)
-      url = "http://api.rhapsody.com/v1/artists/#{id}/albums?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "#{id}/albums?apikey=#{API_KEY}"
 
       begin
         json = JSON.parse(open(url).read)
@@ -199,7 +236,7 @@ module Rhapsody
     end
 
     def self.top_albums(id, limit, offset)
-      url = "http://api.rhapsody.com/v1/artists/#{id}/albums/top?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "#{id}/albums/top?apikey=#{API_KEY}"
       url.limit_offset!(limit, offset) if limit || offset
 
       begin
@@ -213,7 +250,7 @@ module Rhapsody
     end
 
     def self.top_tracks(id, limit, offset)
-      url = "http://api.rhapsody.com/v1/artists/#{id}/tracks/top?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "#{id}/tracks/top?apikey=#{API_KEY}"
       url.limit_offset!(limit, offset) if limit || offset
 
       begin
@@ -227,7 +264,7 @@ module Rhapsody
     end
 
     def self.images(id)
-      url = "http://api.rhapsody.com/v1/artists/#{id}/images?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "#{id}/images?apikey=#{API_KEY}"
 
       begin
         json = JSON.parse(open(url).read)
@@ -240,7 +277,7 @@ module Rhapsody
     end
 
     def self.similar_artists(id)
-      url = "http://api.rhapsody.com/v1/artists/#{id}/similar?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "#{id}/similar?apikey=#{API_KEY}"
 
       begin
         json = JSON.parse(open(url).read)
@@ -253,7 +290,7 @@ module Rhapsody
     end
 
     def self.editorial_features(id)
-      url = "http://api.rhapsody.com/v1/artists/#{id}/posts?apikey=#{API_KEY}"
+      url = API.full_url(self.name) + "#{id}/posts?apikey=#{API_KEY}"
 
       begin
         json = JSON.parse(open(url).read)
@@ -331,6 +368,98 @@ module Rhapsody
     end
   end
 
+  class Genre
+    attr_accessor :id
+
+    def initialize(arguments)
+      arguments.each do |key, value|
+        if key == "subgenres"
+          instance_variable_set("@#{key}", value.map.each {|element| Genre.new(element)})
+        else
+          instance_variable_set("@#{key}", value)
+        end
+      end
+    end
+
+    def self.tree
+      url = API.full_url(self.name) + "?apikey=#{API_KEY}"
+
+      begin
+        json = JSON.parse(open(url).read)
+        json.map do |genre|
+          Genre.new(genre)
+        end
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
+      end
+    end
+
+    def self.detail(id)
+      url = API.full_url(self.name) + "#{id}?apikey=#{API_KEY}"
+
+      begin
+        json = JSON.parse(open(url).read)
+        Genre.new(json)
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
+      end
+    end
+
+    def self.new_releases_by_genre(id)
+      url = API.full_url(self.name) + "#{id}/albums/new?apikey=#{API_KEY}"
+
+      begin
+        json = JSON.parse(open(url).read)
+        json.map do |album|
+          Album.new(album)
+        end
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
+      end
+    end
+
+    def self.top_artists(id, limit, offset)
+      url = API.full_url(self.name) + "#{id}/artists/top?apikey=#{API_KEY}"
+      url.limit_offset!(limit, offset) if limit || offset
+
+      begin
+        json = JSON.parse(open(url).read)
+        json.map do |artist|
+          Artist.new(artist)
+        end
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
+      end
+    end
+
+    def self.top_albums(id, limit, offset)
+      url = API.full_url(self.name) + "#{id}/albums/top?apikey=#{API_KEY}"
+      url.limit_offset!(limit, offset) if limit || offset
+
+      begin
+        json = JSON.parse(open(url).read)
+        json.map do |artist|
+          Album.new(artist)
+        end
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
+      end
+    end
+
+    def self.programmed_radio_stations(id)
+      url = API.full_url(self.name) + "#{id}/stations?apikey=#{API_KEY}"
+
+      begin
+        json = JSON.parse(open(url).read)
+        json.map do |radio|
+          Radio.new(radio)
+        end
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
+      end
+    end
+  end
+
   class Track
     attr_accessor :id, :name, :artist, :album, :genre,
       :duration, :sample
@@ -348,14 +477,15 @@ module Rhapsody
         end
       end
     end
-  end
 
-  class Genre
-    attr_accessor :id
+    def self.details(id)
+      url = API.full_url(self.name) + "#{id}?apikey=#{API_KEY}"
 
-    def initialize(arguments)
-      arguments.each do |key, value|
-        instance_variable_set("@#{key}", value)
+      begin
+        json = JSON.parse(open(url).read)
+        self.new(json)
+      rescue
+        puts "Getting #{__method__} #{self.name} is not currently working."
       end
     end
   end
@@ -387,6 +517,21 @@ module Rhapsody
   end
 
   class Popularity
+  end
+
+  class Radio
+    attr_accessor :id, :name, :artists, :summary, :description,
+      :images
+
+    def initialize(arguments)
+      arguments.each do |key, value|
+        if key == "images"
+          instance_variable_set("@#{key}", Image.new(value))
+        else
+          instance_variable_set("@#{key}", value)
+        end
+      end
+    end
   end
 
   class Review

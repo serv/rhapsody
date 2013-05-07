@@ -37,3 +37,10 @@ describe Rhapsody::Track, '#initialize' do
     track.sample.should == "http://listen.vo.llnwd.net/g2/6/4/9/7/9/899997946.mp3"
   end
 end
+
+describe Rhapsody::Track, '#details' do
+  it 'returns an Track object' do
+    track = Rhapsody::Track.details('tra.5156528')
+    track.class.name.should == 'Rhapsody::Track'
+  end
+end
