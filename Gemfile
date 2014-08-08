@@ -5,6 +5,9 @@ gemspec
 
 gem 'faraday', '~> 0.9.0'
 
-gem 'rspec', '~> 3.0.0', :group => [:development, :test]
-gem 'debugger', '~> 1.6.8', :group => [:development, :test]
-gem 'pry', '~> 0.10.0', :group => [:development, :test]
+group :test do
+  gem 'rspec', '~> 3.0.0'
+  gem 'factory_girl', '~> 4.4.0'
+  gem 'debugger', '~> 1.6.8'
+  gem 'pry', '~> 0.10.0'
+end
