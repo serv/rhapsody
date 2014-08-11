@@ -1,8 +1,13 @@
 require 'rubygems'
-require 'bundler/setup'
+require 'factory_girl'
 
-require 'rhapsody'
+# Load config.yml
+require_relative './config_helper'
+
+# Load gem files
+require_relative '../lib/rhapsody/models/client'
 
 RSpec.configure do |config|
-  # rspec configs
+  config.include FactoryGirl::Syntax::Methods
+  config.include ConfigHelper
 end
