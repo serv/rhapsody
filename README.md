@@ -1,8 +1,8 @@
-# Rhapsody
+# Rhapsody gem
 
 **Still under development**
 
-Rhapsody REST API gem provides a Ruby object-oriented interface.
+Rhapsody gem provides a Ruby object-oriented interface for Rhapsody API.
 
 ## Installation
 
