@@ -33,7 +33,7 @@ options = {
   api_key: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
   api_secret: 'yyyyyyyyyyyy',
   auth_code: 'zzzzzzzzzz',
-  redirect_url: 'http://api.soundtracking.dev:3000/auth/rhapsody/authorize'
+  redirect_url: 'http://example.com/rhapsody/auth'
 }
 
 client = Rhapsody::Client.new(options)
