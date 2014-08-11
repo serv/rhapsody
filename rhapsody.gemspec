@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Rhapsody::VERSION
   spec.authors       = ["Jason Kim"]
   spec.email         = ["jasonkim@rhapsody.com"]
-  spec.summary       = %q{A Ruby object-oriented interface to the Rhapsody REST API}
+  spec.summary       = %q{NOT READY: A Ruby object-oriented interface to the Rhapsody REST API}
   spec.description   = %q{Rhapsody REST API gem provides a Ruby object-oriented interface.}
   spec.homepage      = "https://github.com/serv/rhapsody"
   spec.license       = "MIT"

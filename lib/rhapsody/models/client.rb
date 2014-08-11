@@ -1,4 +1,4 @@
-class Client
+class Rhapsody::Client
   attr_accessor :api_key,
                 :api_secret,
                 :auth_code,
@@ -6,7 +6,8 @@ class Client
                 :raw_reponse,
                 :json_response,
                 :access_token,
-                :refresh_token
+                :refresh_token,
+                :expires_in
 
   class << self
   end
@@ -40,8 +41,8 @@ class Client
     @raw_response = connection.post(oauth_path, post_hash)
     @json_response = JSON.parse(@raw_response)
 
-    # token = JSON.parse(res.env[:body])['access_token']
-
-    # render json: res.env[:body]
+    @access_token = @json_response['access_token']
+    @refresh_token = @json_response['refresh_token']
+    @expires_in = @json_response['expires_in']
   end
 end
