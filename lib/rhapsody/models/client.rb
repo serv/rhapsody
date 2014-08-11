@@ -14,10 +14,10 @@ class Rhapsody::Client
   end
 
   def initialize(options)
-    @api_key = options['api_key']
-    @api_secret = options['api_secret']
-    @auth_code = options['auth_code']
-    @redirect_url = options['redirect_url']
+    @api_key = options[:api_key]
+    @api_secret = options[:api_secret]
+    @auth_code = options[:auth_code]
+    @redirect_url = options[:redirect_url]
   end
 
   def connect
