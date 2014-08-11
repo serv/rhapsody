@@ -11,6 +11,6 @@ describe Rhapsody do
   end
 
   it 'checks version' do
-    expect(Rhapsody::VERSION).to eql('0.0.2')
+    expect(Rhapsody::VERSION).to eql('0.0.4')
   end
 end

@@ -5,6 +5,7 @@ class Rhapsody::Client
                 :redirect_url,
                 :raw_reponse,
                 :json_response,
+                :response_status,
                 :access_token,
                 :refresh_token,
                 :expires_in
@@ -39,7 +40,8 @@ class Rhapsody::Client
     }
 
     @raw_response = connection.post(oauth_path, post_hash)
-    @json_response = JSON.parse(@raw_response)
+    @json_response = JSON.parse(@raw_response.env[:body])
+    @response_status = @raw_response.env[:status]
 
     @access_token = @json_response['access_token']
     @refresh_token = @json_response['refresh_token']
