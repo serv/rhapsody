@@ -16,8 +16,6 @@ class Client
     @api_secret = options['api_secret']
     @auth_code = options['auth_code']
     @redirect_url = options['redirect_url']
-
-    connect
   end
 
   def connect

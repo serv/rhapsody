@@ -18,7 +18,23 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Running tests
+
+Rhapsody gem uses RSpec and FactoryGirl.
+
+1. Get the API key and API secret from
+[Rhapsody Developers site](https://developer.rhapsody.com/).
+
+2. Create a file called `config.yml` in `spec` directory.
+
+3. Add the following with the correct API key and API secret
+
+``` yml
+config_variables:
+  API_KEY: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  API_SECRET: "yyyyyyyyyyyy"
+```
+
 
 ## Contributing
 
