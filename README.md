@@ -1,6 +1,8 @@
 # Rhapsody
 
-TODO: Write a gem description
+**Still under development**
+
+Rhapsody REST API gem provides a Ruby object-oriented interface.
 
 ## Installation
 
@@ -17,6 +19,26 @@ Or install it yourself as:
     $ gem install rhapsody
 
 ## Usage
+
+### Setting up a client
+
+A client prepares you to make calls to Rhapsody API.
+Here is an example code for setting up a client using
+[implicit method](https://developer.rhapsody.com/api#authentication).
+
+``` ruby
+require 'rhapsody'
+
+options = {
+  api_key: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+  api_secret: 'yyyyyyyyyyyy',
+  auth_code: 'zzzzzzzzzz',
+  redirect_url: 'http://api.soundtracking.dev:3000/auth/rhapsody/authorize'
+}
+
+client = Rhapsody::Client.new(options)
+client.connect
+```
 
 ### Running tests
 
@@ -35,6 +57,9 @@ config_variables:
   API_SECRET: "yyyyyyyyyyyy"
 ```
 
+4. `$ bundle install`
+
+5. `$ rspec`
 
 ## Contributing
 
