@@ -12,6 +12,13 @@ class Rhapsody::ClientsController
 
   OAUTH_PATH = '/oauth/access_token'
 
+  def initialize(options)
+    @api_key = options[:api_key]
+    @api_secret = options[:api_secret]
+    @auth_code = options[:auth_code]
+    @redirect_url = options[:redirect_url]
+  end
+
   def connect
     connection = FaradayConnection.prepare_authentication
 
