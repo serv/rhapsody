@@ -1,11 +1,6 @@
 require 'spec_helper'
 
-describe Rhapsody::Client do
-  it 'has HOST_URL' do
-    host_url = Rhapsody::HOST_URL
-    expect(host_url).to eql('https://api.rhapsody.com')
-  end
-
+describe Rhapsody::MembersController do
   it '.new' do
   end
 
