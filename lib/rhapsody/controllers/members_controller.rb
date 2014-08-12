@@ -14,10 +14,10 @@ class Rhapsody::MembersController
   # /me/account
   def account
     @path = PARENT_PATH + '/account'
-    connection = FaradayConnection.prepare_authorization(access_token)
+    connection = Rhapsody::FaradayConnection.prepare_authorization(access_token)
     @raw_reponse = connection.get(@path)
     @json_response = JSON.parse(@raw_response.env[:body])
     @response_status = @raw_response.env[:status]
-    member = Member.new(@json_response)
+    member = Rhapsody::Member.new(@json_response)
   end
 end
