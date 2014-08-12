@@ -20,7 +20,7 @@ class Rhapsody::ClientsController
   end
 
   def connect
-    connection = FaradayConnection.prepare_authentication
+    connection = Rhapsody::FaradayConnection.prepare_authentication
 
     post_hash = {
       client_id: @api_key,
@@ -42,7 +42,7 @@ class Rhapsody::ClientsController
   end
 
   def me_account
-    members_controller = MembersController.new(@access_token)
+    members_controller = Rhapsody::MembersController.new(@access_token)
     members_controller.account
   end
 end
