@@ -15,7 +15,7 @@ class Rhapsody::MembersController
   def account
     @path = PARENT_PATH + '/account'
     connection = Rhapsody::FaradayConnection.prepare_authorization(access_token)
-    @raw_reponse = connection.get(@path)
+    @raw_response = connection.get(@path)
     @json_response = JSON.parse(@raw_response.env[:body])
     @response_status = @raw_response.env[:status]
     member = Rhapsody::Member.new(@json_response)

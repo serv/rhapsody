@@ -1,3 +1,3 @@
 module Rhapsody
-  VERSION = "0.0.6.beta3"
+  VERSION = "0.0.6.beta4"
 end
