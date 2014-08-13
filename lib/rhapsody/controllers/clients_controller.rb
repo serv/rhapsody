@@ -42,7 +42,8 @@ class Rhapsody::ClientsController
   end
 
   def me_account
-    members_controller = Rhapsody::MembersController.new(@access_token)
-    members_controller.account
+    options = { access_token: @access_token }
+    members_controller = Rhapsody::MembersController.new(options)
+    member = members_controller.account
   end
 end

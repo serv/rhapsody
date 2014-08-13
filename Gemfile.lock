@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rhapsody (0.0.6.beta3)
+    rhapsody (0.0.6.beta4)
 
 GEM
   remote: https://rubygems.org/
