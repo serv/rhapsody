@@ -41,7 +41,7 @@ class Rhapsody::ClientsController
   end
 
   def renew
-    conneciton = Rhapsody::FaradayConnection.prepare_authentication
+    connection = Rhapsody::FaradayConnection.prepare_authentication
 
     post_hash = {
       client_id: @api_key,
