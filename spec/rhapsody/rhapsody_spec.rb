@@ -13,7 +13,7 @@ describe Rhapsody do
   end
 
   it 'checks version' do
-    expect(Rhapsody::VERSION).to eql('0.0.8.beta1')
+    expect(Rhapsody::VERSION).to eql('0.0.8.beta2')
   end
 
   it 'has a helper for getting an access token' do
