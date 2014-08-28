@@ -41,6 +41,27 @@ class Rhapsody::ClientsController
     self
   end
 
+  def renew
+    conneciton = Rhapsody::FaradayConnection.prepare_authentication
+
+    post_hash = {
+      client_id: @api_key,
+      client_secret: @api_secret,
+      response_type: 'code',
+      grant_type: 'refresh_token',
+      refresh_token: @refresh_token
+    }
+
+    @raw_response = connection.post(OAUTH_PATH, post_hash)
+    @json_response = JSON.parse(@raw_response.env[:body])
+    @response_status = @raw_response.env[:status]
+
+    @access_token = @json_response['access_token']
+    @refresh_token = @json_response['refresh_token']
+    @expires_in = @json_response['expires_in']
+    self
+  end
+
   def me_account
     options = { access_token: @access_token }
     members_controller = Rhapsody::MembersController.new(options)
