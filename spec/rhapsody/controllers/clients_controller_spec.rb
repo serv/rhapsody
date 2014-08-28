@@ -68,4 +68,11 @@ describe Rhapsody::ClientsController do
       expect(member).to respond_to(attr)
     end
   end
+
+  it '#renew' do
+    client_controller = AuthenticationHelper.get_connected_client
+    client_controller.renew
+
+    expect(client_controller.response_status).to eql(200)
+  end
 end
