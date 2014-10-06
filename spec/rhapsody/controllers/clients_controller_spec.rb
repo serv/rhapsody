@@ -65,7 +65,7 @@ describe Rhapsody::ClientsController do
       :playsRemaining
     ]
     member_attributes.each do |attr|
-      expect(member).to respond_to(attr)
+      expect(member).to respond_to(attr.to_s.underscore)
     end
   end
 
