@@ -67,6 +67,9 @@ describe Rhapsody::ClientsController do
     member_attributes.each do |attr|
       expect(member).to respond_to(attr.to_s.underscore)
     end
+
+    expect(member).to respond_to(:attr_list)
+    expect(member.attr_list).to eql(member_attributes.map {|attr| attr.to_s.underscore })
   end
 
   it '#renew' do
