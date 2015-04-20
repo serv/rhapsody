@@ -57,12 +57,15 @@ describe Rhapsody::ClientsController do
       :canStreamOnHomeDevice,
       :canStreamOnPC,
       :canUpgradeStreams,
+      :canPlayPremiumRadio,
       :maxStreamCount,
       :isPlayBasedTier,
       :isMonthlyPlayBasedTier,
       :isOneTimePlayBasedTier,
       :totalPlays,
-      :playsRemaining
+      :playsRemaining,
+      :skipLimit,
+      :skipLimitMinutes
     ]
     member_attributes.each do |attr|
       expect(member).to respond_to(attr.to_s.underscore)
