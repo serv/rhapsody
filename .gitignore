@@ -11,3 +11,4 @@
 # custom
 spec/config.yml
 .DS_Store
+*.gem
