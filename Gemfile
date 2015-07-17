@@ -1,13 +1,19 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in rhapsody.gemspec
 gemspec
 
+# HTTP client lib
 gem 'faraday', '~> 0.9.1'
 
-group :test, :development do
-  gem 'rspec', '~> 3.2.0'
-  gem 'factory_girl', '~> 4.5.0'
-  gem 'debugger', '~> 1.6.8'
-  gem 'pry', '~> 0.10.0'
+# JSON parsing
+gem 'oj', '~> 2.12.9'
+
+group :development do
+  gem 'byebug', '~> 5.0.0'
+end
+
+group :test do
+  gem 'rspec', '~> 3.3.0'
+  gem 'capybara', '~> 2.4.4'
+  gem 'selenium-webdriver', '~> 2.46.2'
 end
