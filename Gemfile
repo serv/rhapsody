@@ -16,4 +16,7 @@ group :test do
   gem 'rspec', '~> 3.3.0'
   gem 'capybara', '~> 2.4.4'
   gem 'selenium-webdriver', '~> 2.46.2'
+
+  # Testing state parameter during OAuth 2 flow
+  gem 'uuid', '~> 2.3.8'
 end

@@ -4,6 +4,7 @@ class Rhapsody::Client
                 :redirect_uri,
                 :username,
                 :password,
+                :state,
                 :auth_code,
                 :authentication
 
@@ -20,7 +21,13 @@ class Rhapsody::Client
   end
 
   def authorization_url
-    Rhapsody::Request::HOST_URL + "/oauth/authorize?client_id=#{@api_key}&redirect_uri=#{@redirect_uri}&response_type=code"
+    default = Rhapsody::Request::HOST_URL + "/oauth/authorize?client_id=#{@api_key}&redirect_uri=#{@redirect_uri}&response_type=code"
+
+    if @state
+      default + "&state=#{@state}"
+    else
+      default
+    end
   end
 
   def connect

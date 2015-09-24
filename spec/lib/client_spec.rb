@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'oj'
 require 'uri'
 require 'cgi'
+require 'uuid'
 
 describe Rhapsody::Client do
   it 'has a class' do
@@ -16,6 +17,7 @@ describe Rhapsody::Client do
     expect(client).to respond_to('redirect_uri')
     expect(client).to respond_to('username')
     expect(client).to respond_to('password')
+    expect(client).to respond_to('state')
     expect(client).to respond_to('auth_code')
     expect(client).to respond_to('authentication')
 
@@ -43,11 +45,13 @@ describe Rhapsody::Client do
     it '#connect' do
       yaml = ConfigHelper.load
       config_variables = yaml['config_variables']
+      state = UUID.new.generate
 
       client_hash = {
         api_key: config_variables['API_KEY'],
         api_secret: config_variables['API_SECRET'],
-        redirect_uri: config_variables['REDIRECT_URI']
+        redirect_uri: config_variables['REDIRECT_URI'],
+        state: state
       }
 
       client = Rhapsody::Client.new(client_hash)
@@ -61,6 +65,11 @@ describe Rhapsody::Client do
 
       redirect_uri = page.find('.btn.btn-primary.btn-warning.pull-right')['href']
       client.auth_code = CGI.parse(URI.parse(redirect_uri).query)['code'].first
+      client.state = CGI.parse(URI.parse(redirect_uri).query)['state'].first
+
+      # Ensure that state remained the same during the OAuth 2 flow
+      expect(client.state).to eql(state)
+
       authentication = client.connect
 
       expect(authentication.access_token).not_to eql(nil)
