@@ -2,6 +2,8 @@
 
 A Ruby interface to the Rhapsody API.
 
+**This gem has been deprecated. Please use [Napster gem](https://github.com/Napster/napster-ruby) instead.**
+
 ## Installation
 
 Add this line to your application's Gemfile:
